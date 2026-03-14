@@ -7,396 +7,82 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #050a0e;
-    --bg2: #080f14;
-    --panel: #0a1520;
-    --green: #00ff88;
-    --cyan: #00e5ff;
-    --red: #ff3366;
-    --text: #c8dce8;
-    --muted: #4a6a7a;
-    --border: #0d2030;
-    --glow: 0 0 20px rgba(0,255,136,0.3);
+    --bg: #050a0e; --bg2: #080f14; --panel: #0a1520;
+    --green: #00ff88; --cyan: #00e5ff; --red: #ff3366;
+    --text: #c8dce8; --muted: #4a6a7a; --border: #0d2030;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
-
   body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Tajawal', sans-serif;
-    overflow-x: hidden;
-    /* تم إصلاح المؤشر: سيعمل المؤشر المخصص الآن بفضل سكريبت JS */
+    background: var(--bg); color: var(--text);
+    font-family: 'Tajawal', sans-serif; overflow-x: hidden;
     cursor: none; 
   }
 
-  /* Custom cursor */
-  .cursor {
-    width: 12px; height: 12px;
-    background: var(--green);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s;
-    box-shadow: 0 0 10px var(--green), 0 0 20px var(--green);
-  }
-  .cursor-ring {
-    width: 36px; height: 36px;
-    border: 1px solid rgba(0,255,136,0.4);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: all 0.15s ease;
-  }
+  /* المؤشر المخصص */
+  .cursor { width: 12px; height: 12px; background: var(--green); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); box-shadow: 0 0 10px var(--green); }
+  .cursor-ring { width: 36px; height: 36px; border: 1px solid rgba(0,255,136,0.4); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: all 0.1s ease; }
 
-  /* Grid background */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: 
-      linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
+  /* الخلفية */
+  body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px); background-size: 40px 40px; z-index: 0; }
 
-  /* Scanline effect */
-  body::after {
-    content: '';
-    position: fixed; inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0,0,0,0.05) 2px,
-      rgba(0,0,0,0.05) 4px
-    );
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 60px;
-    background: rgba(5,10,14,0.85);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-logo {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 1.1rem;
-    color: var(--green);
-    letter-spacing: 2px;
-  }
-  .nav-logo span { color: var(--cyan); }
-
-  .nav-links {
-    display: flex;
-    gap: 40px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 500;
-    letter-spacing: 1px;
-    transition: color 0.3s;
-    position: relative;
-  }
-
-  .nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px; left: 0; right: 0;
-    height: 1px;
-    background: var(--green);
-    transform: scaleX(0);
-    transition: transform 0.3s;
-  }
-
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: rgba(5,10,14,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Share Tech Mono', monospace; color: var(--green); }
+  .nav-links { display: flex; gap: 30px; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
   .nav-links a:hover { color: var(--green); }
-  .nav-links a:hover::after { transform: scaleX(1); }
 
-  .nav-status {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--green);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .status-dot {
-    width: 8px; height: 8px;
-    background: var(--green);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,255,136,0.4); }
-    50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(0,255,136,0); }
-  }
-
-  /* HERO */
+  /* HERO SECTION - الحل هنا */
   .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: 120px 60px 60px;
+    justify-content: space-between; /* توزيع العناصر */
+    padding: 100px 8%;
     position: relative;
     z-index: 2;
+    gap: 20px;
   }
 
-  .hero-content { max-width: 700px; }
+  .hero-content { flex: 1; max-width: 600px; text-align: right; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 4rem); font-weight: 900; line-height: 1.2; margin-bottom: 15px; }
+  .highlight { color: var(--green); text-shadow: 0 0 20px rgba(0,255,136,0.3); }
 
-  .hero-tag {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--green);
-    letter-spacing: 3px;
-    margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .hero-tag::before {
-    content: '//';
-    color: var(--muted);
-  }
-
-  .hero h1 {
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 8px;
-    color: #e8f4f8;
-  }
-
-  .hero h1 .highlight {
-    color: var(--green);
-    text-shadow: 0 0 40px rgba(0,255,136,0.4);
-  }
-
-  .hero-role {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 1.1rem;
-    color: var(--cyan);
-    margin-bottom: 32px;
-    letter-spacing: 1px;
-    min-height: 1.2em;
-  }
-
-  .typing-cursor {
-    display: inline-block;
-    width: 2px;
-    height: 1.2em;
-    background: var(--cyan);
-    margin-right: 4px;
-    vertical-align: middle;
-    animation: blink 1s infinite;
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-
-  .hero-desc {
-    font-size: 1.05rem;
-    line-height: 1.8;
-    color: var(--muted);
-    max-width: 520px;
-    margin-bottom: 48px;
-  }
-
-  .hero-buttons {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .btn-primary {
-    padding: 14px 32px;
-    background: var(--green);
-    color: #050a0e;
-    font-family: 'Tajawal', sans-serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.3s;
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-  }
-
-  .btn-primary:hover {
-    background: #00cc6a;
-    box-shadow: 0 0 30px rgba(0,255,136,0.5);
-    transform: translateY(-2px);
-  }
-
-  .btn-secondary {
-    padding: 13px 32px;
-    background: transparent;
-    color: var(--cyan);
-    font-family: 'Tajawal', sans-serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    border: 1px solid var(--cyan);
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.3s;
-  }
-
-  .btn-secondary:hover {
-    background: rgba(0,229,255,0.1);
-    box-shadow: 0 0 20px rgba(0,229,255,0.3);
-  }
-
-  /* Terminal widget */
-  .hero-terminal {
-    position: absolute;
-    left: 60px;
-    bottom: 80px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--muted);
-    line-height: 1.8;
-  }
-
-  .hero-terminal .t-green { color: var(--green); }
-  .hero-terminal .t-cyan { color: var(--cyan); }
-
-  /* Decorative Shield */
+  /* العنصر الديكوري - تم إصلاح الموضع */
   .hero-deco {
-    position: absolute;
-    right: 60px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 400px;
-    height: 400px;
+    flex: 1;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    position: relative;
+    max-width: 400px;
+    height: 400px;
   }
 
-  .shield-ring {
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid;
-    animation: rotateRing linear infinite;
-  }
+  .shield-ring { position: absolute; border-radius: 50%; border: 1px solid rgba(0,255,136,0.1); animation: rotate 20s linear infinite; }
+  .shield-ring:nth-child(1) { width: 100%; height: 100%; }
+  .shield-ring:nth-child(2) { width: 75%; height: 75%; border-color: rgba(0,229,255,0.1); animation-direction: reverse; }
+  .shield-center { font-size: clamp(3rem, 8vw, 6rem); filter: drop-shadow(0 0 20px var(--green)); }
 
-  .shield-ring:nth-child(1) { width: 380px; height: 380px; border-color: rgba(0,255,136,0.1); animation-duration: 30s; }
-  .shield-ring:nth-child(2) { width: 300px; height: 300px; border-color: rgba(0,229,255,0.15); animation-duration: 20s; animation-direction: reverse; }
-  .shield-ring:nth-child(3) { width: 220px; height: 220px; border-color: rgba(0,255,136,0.2); animation-duration: 15s; }
+  @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-  @keyframes rotateRing { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  /* التنسيقات العامة */
+  .btn-primary { padding: 12px 28px; background: var(--green); color: #050a0e; border: none; font-weight: 700; cursor: pointer; text-decoration: none; clip-path: polygon(0 0, 90% 0, 100% 20%, 100% 100%, 10% 100%, 0 80%); }
+  .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); background: var(--bg2); border-y: 1px solid var(--border); }
+  .stat-item { padding: 30px; text-align: center; border: 1px solid var(--border); }
+  .stat-num { font-size: 2.5rem; color: var(--green); font-family: 'Share Tech Mono'; }
 
-  .shield-center {
-    font-size: 5rem;
-    z-index: 1;
-    filter: drop-shadow(0 0 30px rgba(0,255,136,0.5));
-    animation: floatIcon 4s ease-in-out infinite;
-  }
+  /* قسم التواصل */
+  .contact-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; padding: 50px 0; }
+  .form-group { margin-bottom: 15px; }
+  .form-input, .form-textarea { width: 100%; background: var(--panel); border: 1px solid var(--border); color: white; padding: 12px; }
 
-  @keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-
-  /* STATS BAR */
-  .stats-bar {
-    position: relative; z-index: 2;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    background: var(--bg2);
-  }
-
-  .stat-item {
-    padding: 32px 40px;
-    border-left: 1px solid var(--border);
-    text-align: center;
-  }
-
-  .stat-num {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--green);
-    text-shadow: var(--glow);
-    display: block;
-  }
-
-  .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 4px; display: block; }
-
-  /* SECTIONS */
-  section { position: relative; z-index: 2; padding: 100px 60px; }
-  .section-header { margin-bottom: 60px; }
-  .section-tag { font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: var(--green); letter-spacing: 4px; display: block; }
-  .section-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; color: #e8f4f8; }
-  .section-title span { color: var(--green); }
-  .section-line { width: 60px; height: 2px; background: linear-gradient(90deg, var(--green), transparent); margin-top: 20px; }
-
-  /* ABOUT */
-  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
-  .about-text p { font-size: 1.05rem; line-height: 1.9; color: var(--muted); margin-bottom: 20px; }
-  .about-specs { display: flex; flex-direction: column; gap: 16px; }
-  .spec-row { display: grid; grid-template-columns: 160px 1fr; padding: 16px 20px; background: var(--panel); border: 1px solid var(--border); border-right: 3px solid var(--green); font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; }
-  .spec-key { color: var(--muted); }
-  .spec-val { color: var(--cyan); }
-
-  /* SKILLS */
-  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .skill-card { background: var(--panel); border: 1px solid var(--border); padding: 32px; transition: all 0.4s; }
-  .skill-card:hover { border-color: var(--green); transform: translateY(-4px); }
-  .skill-name { font-size: 1.1rem; font-weight: 700; color: #e8f4f8; margin-top: 15px; }
-  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 15px; }
-  .skill-tag { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; padding: 3px 10px; background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2); color: var(--green); }
-
-  /* PROJECTS */
-  .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-  .project-card { background: var(--panel); border: 1px solid var(--border); transition: all 0.4s; }
-  .project-header { padding: 28px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
-  .project-body { padding: 24px 28px; }
-  .project-title { font-size: 1.15rem; font-weight: 700; color: #e8f4f8; }
-  .project-desc { font-size: 0.9rem; color: var(--muted); margin-bottom: 20px; line-height: 1.7;}
-  .stack-item { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; padding: 3px 8px; background: var(--bg); border: 1px solid var(--border); color: var(--muted); margin-left: 5px; }
-
-  /* CONTACT FORM */
-  .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
-  .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
-  .form-label { font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: var(--muted); }
-  .form-input, .form-textarea { background: var(--panel); border: 1px solid var(--border); color: var(--text); padding: 14px; width: 100%; outline: none; }
-  .form-input:focus, .form-textarea:focus { border-color: var(--green); }
-
-  /* FOOTER */
-  footer { padding: 40px 60px; border-top: 1px solid var(--border); background: var(--bg2); display: flex; justify-content: space-between; }
-
-  /* Responsive */
-  @media (max-width: 1024px) {
-    .about-grid, .skills-grid, .projects-grid, .contact-wrapper { grid-template-columns: 1fr; }
-    nav { padding: 20px 30px; }
-    section { padding: 80px 30px; }
-    .hero-deco { display: none; }
+  @media (max-width: 768px) {
+    .hero { flex-direction: column; text-align: center; padding-top: 150px; }
+    .hero-content { text-align: center; }
+    .hero-deco { order: -1; width: 250px; height: 250px; margin: 0 auto; }
+    .nav-links { display: none; }
   }
 </style>
 </head>
@@ -410,233 +96,92 @@
   <ul class="nav-links">
     <li><a href="#about">عني</a></li>
     <li><a href="#skills">المهارات</a></li>
-    <li><a href="#projects">المشاريع</a></li>
     <li><a href="#contact">تواصل</a></li>
   </ul>
-  <div class="nav-status"><div class="status-dot"></div> AVAILABLE_FOR_WORK</div>
 </nav>
 
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-tag">مهندس أمن سيبراني</div>
-    <h1>
-      <span class="glitch" data-text="مرحباً، أنا">مرحباً، أنا</span><br>
-      <span class="highlight glitch" data-text="عمران العمر">عمران العمر</span>
-    </h1>
-    <p class="hero-role">
-      <span id="typedText"></span><span class="typing-cursor"></span>
-    </p>
-    <p class="hero-desc">مهندس معلوماتية شغوف بعالم الأمن السيبراني. أركّز على تطوير مهاراتي في اختبار الاختراق وأمن الشبكات لبناء دفاعات أقوى.</p>
-    <div class="hero-buttons">
-      <a href="#projects" class="btn-primary">استعرض أعمالي</a>
-      <a href="#contact" class="btn-secondary">تواصل معي</a>
-    </div>
+    <h1 class="glitch" data-text="عمران العمر">مرحباً، أنا <br><span class="highlight">عمران العمر</span></h1>
+    <p id="typedText" style="color: var(--cyan); font-family: 'Share Tech Mono'; height: 24px;"></p>
+    <p style="margin: 20px 0 40px; color: var(--muted);">مهندس أمن سيبراني متخصص في حماية الأنظمة واختبار الاختراق.</p>
+    <a href="#contact" class="btn-primary">تواصل معي الآن</a>
   </div>
 
   <div class="hero-deco">
     <div class="shield-ring"></div>
     <div class="shield-ring"></div>
-    <div class="shield-ring"></div>
     <div class="shield-center">🛡️</div>
-  </div>
-
-  <div class="hero-terminal">
-    <div><span class="t-green">$</span> whoami</div>
-    <div><span class="t-cyan">omran_alomar@kali</span></div>
-    <div style="margin-top:8px"><span class="t-green">$</span> status --check</div>
-    <div><span class="t-green">✓</span> actively_learning</div>
   </div>
 </section>
 
 <div class="stats-bar">
-  <div class="stat-item"><span class="stat-num" data-target="3">0</span><span class="stat-label">مجالات تخصص</span></div>
-  <div class="stat-item"><span class="stat-num" data-target="2">0</span><span class="stat-label">نظام تشغيل</span></div>
-  <div class="stat-item"><span class="stat-num" data-target="10">0</span><span class="stat-label">أداة أمنية</span></div>
-  <div class="stat-item"><span class="stat-num" data-target="100">0</span><span class="stat-label">% شغف</span></div>
+  <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">تخصصات</div></div>
+  <div class="stat-item"><div class="stat-num">10+</div><div class="stat-label">أدوات أمنية</div></div>
+  <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">شغف</div></div>
 </div>
 
-<section id="about">
-  <div class="section-header">
-    <span class="section-tag">01 // ABOUT_ME</span>
-    <h2 class="section-title">من <span>أنا؟</span></h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>أنا <strong>عمران العمر</strong>، مهندس معلوماتية شغفي الحقيقي هو <strong>الأمن السيبراني</strong>. أعمل حالياً على تطوير مهاراتي في <strong>أمن الشبكات</strong> واستخدام <strong>Kali Linux</strong> لتطبيق ما أتعلمه عملياً.</p>
-    </div>
-    <div class="about-specs">
-      <div class="spec-row"><span class="spec-key">الاسم:</span><span class="spec-val">عمران العمر</span></div>
-      <div class="spec-row"><span class="spec-key">المجال:</span><span class="spec-val">اختبار الاختراق</span></div>
-      <div class="spec-row"><span class="spec-key">الحالة:</span><span class="spec-val" style="color:var(--green)">طالب — في طور التعلم ✓</span></div>
-    </div>
-  </div>
-</section>
-
-<section id="skills" style="background:var(--bg2);">
-  <div class="section-header">
-    <span class="section-tag">02 // SKILLS</span>
-    <h2 class="section-title">مجالات <span>التخصص</span></h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="skills-grid">
-    <div class="skill-card">
-      <span class="skill-icon">🌐</span>
-      <div class="skill-name">أمن الشبكات</div>
-      <div class="skill-tags">
-        <span class="skill-tag">TCP/IP</span><span class="skill-tag">Wireshark</span><span class="skill-tag">Firewall</span>
-      </div>
-    </div>
-    <div class="skill-card">
-      <span class="skill-icon">⚔️</span>
-      <div class="skill-name">اختبار الاختراق</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Nmap</span><span class="skill-tag">Metasploit</span><span class="skill-tag">Burp Suite</span>
-      </div>
-    </div>
-    <div class="skill-card">
-      <span class="skill-icon">💻</span>
-      <div class="skill-name">أنظمة التشغيل</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Kali Linux</span><span class="skill-tag">Bash</span><span class="skill-tag">PowerShell</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="projects">
-    <div class="section-header">
-        <span class="section-tag">03 // LEARNING_PATH</span>
-        <h2 class="section-title">رحلة <span>التعلم</span></h2>
-        <div class="section-line"></div>
-    </div>
-    <div class="projects-grid">
-        <div class="project-card">
-            <div class="project-header">
-                <div class="project-title">Penetration Testing</div>
-                <span class="stack-item">Active</span>
-            </div>
-            <div class="project-body">
-                <p class="project-desc">دراسة أساليب الاستطلاع واستغلال الثغرات.</p>
-            </div>
-        </div>
-        <div class="project-card">
-            <div class="project-header">
-                <div class="project-title">GitHub Portfolio</div>
-                <a href="https://github.com/OmranAlomar" target="_blank" style="color:var(--green); text-decoration:none;">Visit →</a>
-            </div>
-            <div class="project-body">
-                <p class="project-desc">مستودع لمشاريع البرمجة وأدوات الأمن.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="contact" style="background:var(--bg2);">
-  <div class="section-header">
-    <span class="section-tag">04 // CONTACT</span>
-    <h2 class="section-title">تواصل <span>معي</span></h2>
-    <div class="section-line"></div>
-  </div>
+<section id="contact" style="padding: 80px 8%;">
+  <h2 style="margin-bottom: 30px;">تواصل <span>معي</span></h2>
   <div class="contact-wrapper">
-    <div class="contact-info">
-      <p>يسعدني التواصل معك والإجابة على استفساراتك التقنية أو طلبات المشاريع.</p>
-      <a href="https://github.com/OmranAlomar" target="_blank" style="color:var(--text); text-decoration:none;">GitHub: OmranAlomar</a>
+    <div>
+      <p>يمكنك مراسلتي مباشرة عبر واتساب، سأرد عليك في أقرب وقت.</p>
     </div>
     <div class="contact-form">
-      <div class="form-group">
-        <label class="form-label">FULL_NAME</label>
-        <input type="text" class="form-input" id="wa-name" placeholder="اسمك الكامل">
-      </div>
-      <div class="form-group">
-        <label class="form-label">MESSAGE</label>
-        <textarea class="form-textarea" id="wa-message" placeholder="اكتب رسالتك هنا..."></textarea>
-      </div>
-      <button class="btn-primary" onclick="sendWhatsApp()" style="width:100%;">إرسال عبر واتساب</button>
+      <div class="form-group"><input type="text" id="wa-name" class="form-input" placeholder="اسمك"></div>
+      <div class="form-group"><textarea id="wa-message" class="form-textarea" placeholder="رسالتك"></textarea></div>
+      <button onclick="sendWhatsApp()" class="btn-primary" style="width: 100%;">إرسال للواتساب</button>
     </div>
   </div>
 </section>
 
-<footer>
-  <div class="footer-copy">© 2026 <span>OMRAN_ALOMAR</span>. All Rights Reserved.</div>
-  <div class="footer-links">
-    <a href="#">Privacy Policy</a>
-    <a href="#">Security Terms</a>
-  </div>
-</footer>
-
 <script>
-  // 1. تحريك المؤشر المخصص
-  const cursor = document.getElementById('cursor');
-  const cursorRing = document.getElementById('cursorRing');
-
+  // تحريك الماوس
   document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-    cursorRing.style.left = e.clientX + 'px';
-    cursorRing.style.top = e.clientY + 'px';
+    document.getElementById('cursor').style.left = e.clientX + 'px';
+    document.getElementById('cursor').style.top = e.clientY + 'px';
+    document.getElementById('cursorRing').style.left = e.clientX + 'px';
+    document.getElementById('cursorRing').style.top = e.clientY + 'px';
   });
 
-  // 2. وظيفة إرسال الواتساب
+  // إرسال واتساب (معدل)
   function sendWhatsApp() {
     const name = document.getElementById('wa-name').value;
     const message = document.getElementById('wa-message').value;
-    
-    // --- هام: استبدل الرقم أدناه برقمك الحقيقي ---
-    const myNumber = "963992433390"; 
+    const myNumber = "963992433390"; // رقمك بدون +
 
-    if (!name || !message) {
-      alert("الرجاء إدخال الاسم والرسالة");
-      return;
-    }
+    if(!name || !message) { alert("املأ البيانات يا غالي"); return; }
 
-    const text = `مرحباً عمران،%0Aالاسم: ${name}%0Aالرسالة: ${message}`;
+    const text = encodeURIComponent(`مرحباً عمران،\nالاسم: ${name}\nالرسالة: ${message}`);
     window.open(`https://wa.me/${myNumber}?text=${text}`, '_blank');
   }
 
-  // 3. تأثير الكتابة الآلية
-  const typedTextSpan = document.getElementById("typedText");
-  const words = ["Cyber Security Engineer", "Pentester", "Networking Expert"];
-  let wordIndex = 0, charIndex = 0;
+  // تأثير الكتابة
+  const words = ["Cyber Security Engineer", "Pentester", "Bug Hunter"];
+  let i = 0, j = 0, current = "", isDeleting = false;
 
-  function typeEffect() {
-    if (charIndex < words[wordIndex].length) {
-      typedTextSpan.textContent += words[wordIndex].charAt(charIndex);
-      charIndex++;
-      setTimeout(typeEffect, 100);
+  function type() {
+    current = words[i];
+    if(isDeleting) {
+      document.getElementById('typedText').textContent = current.substring(0, j-1);
+      j--;
     } else {
-      setTimeout(eraseEffect, 2000);
+      document.getElementById('typedText').textContent = current.substring(0, j+1);
+      j++;
+    }
+
+    if(!isDeleting && j === current.length) {
+      isDeleting = true;
+      setTimeout(type, 2000);
+    } else if(isDeleting && j === 0) {
+      isDeleting = false;
+      i = (i + 1) % words.length;
+      setTimeout(type, 500);
+    } else {
+      setTimeout(type, isDeleting ? 50 : 100);
     }
   }
-
-  function eraseEffect() {
-    if (charIndex > 0) {
-      typedTextSpan.textContent = words[wordIndex].substring(0, charIndex - 1);
-      charIndex--;
-      setTimeout(eraseEffect, 50);
-    } else {
-      wordIndex = (wordIndex + 1) % words.length;
-      setTimeout(typeEffect, 500);
-    }
-  }
-
-  // 4. عداد الإحصائيات
-  const counters = document.querySelectorAll('.stat-num');
-  counters.forEach(counter => {
-    const target = +counter.getAttribute('data-target');
-    const updateCount = () => {
-      const count = +counter.innerText;
-      if (count < target) {
-        counter.innerText = count + 1;
-        setTimeout(updateCount, 50);
-      } else {
-        counter.innerText = target;
-      }
-    };
-    updateCount();
-  });
-
-  document.addEventListener("DOMContentLoaded", typeEffect);
+  type();
 </script>
 
 </body>
